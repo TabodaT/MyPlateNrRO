@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.myplatenrro.Controller">
+
+    <top>
+        <VBox alignment="CENTER">
+            <padding>
+                <Insets top="10" bottom="10"/>
+            </padding>
+            <Label text="Gaseste numarul de inmatriculare personalizat pe care ti-l doresti!">
+                <font>
+                    <Font name="Times New Roman bold" size="25"/>
+                </font>
+            </Label>
+            <GridPane hgap="10" vgap="5">
+                <padding>
+                    <Insets left="50" top="10"/>
+                </padding>
+                <Label text="Alege    →" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                    <font>
+                        <Font name="Times New Roman" size="15"/>
+                    </font>
+                </Label>
+                <fx:define>
+                    <ToggleGroup fx:id="cifreToggle"/>
+                </fx:define>
+                <Label text="↓" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.halignment="CENTER">
+                    <font>
+                        <Font name="Times New Roman" size="15"/>
+                    </font>
+                </Label>
+                <RadioButton text="Cifre Random" fx:id="cifreRandom" onAction="#handlecifreRandom"
+                             toggleGroup="$cifreToggle" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <RadioButton text="Textualizare cifre :P"  fx:id="textualizare" onAction="#handleTextualizare"
+                             toggleGroup="$cifreToggle" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Button text="Genereaza" onAction="#handleGenereaza" fx:id="buttonGenereaza"
+                        GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <Button text="Refresh" onAction="#handleRefreshButton" fx:id="buttonRefresh"
+                        GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                <Button text="Lista" onAction="#handleListaButton" fx:id="buttonLista"
+                        GridPane.rowIndex="1" GridPane.columnIndex="4"/>
+                <Label fx:id="explicatieRadio" text="Alege de mai jos: ↓" prefWidth="400"
+                GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.columnSpan="4">
+                    <Font name="Times New Roman bold" size="15"/>
+                </Label>
+                <Label  text="Pentru textualizare:"
+                       GridPane.rowIndex="0" GridPane.columnIndex="5" GridPane.columnSpan="2">
+                    <Font name="Times New Roman bold" size="15"/>
+                </Label>
+                <CheckBox text="4 litere"  fx:id="litere4" onAction="#handleCheckLitere"
+                              GridPane.rowIndex="1" GridPane.columnIndex="5"/>
+                <CheckBox text="5 litere"  fx:id="litere5" onAction="#handleCheckLitere"
+                              GridPane.rowIndex="2" GridPane.columnIndex="5"/>
+                <CheckBox text="6 litere"  fx:id="litere6" onAction="#handleCheckLitere"
+                              GridPane.rowIndex="1" GridPane.columnIndex="6"/>
+                <CheckBox text="7 litere"  fx:id="litere7" onAction="#handleCheckLitere"
+                             GridPane.rowIndex="2" GridPane.columnIndex="6"/>
+            </GridPane>
+
+        </VBox>
+    </top>
+    <left>
+        <ListView fx:id="judeteLista" prefWidth="150">
+<!--            onMouseClicked="#handleClickJudete"-->
+        </ListView>
+    </left>
+    <center>
+        <VBox>
+            <TextArea fx:id="numarGenerat" VBox.vgrow="ALWAYS" wrapText="true">
+                <padding>
+                    <Insets topRightBottomLeft="3"/>
+                </padding>
+            </TextArea>
+        </VBox>
+    </center>
+    <right>
+        <VBox>
+            <TextArea fx:id="listaNumereGenerate" VBox.vgrow="ALWAYS" prefWidth="310">
+                <padding>
+                    <Insets topRightBottomLeft="3"/>
+                </padding>
+            </TextArea>
+        </VBox>
+
+    </right>
+</BorderPane>
