@@ -137,7 +137,7 @@ public class Controller {
             buttonLista.setDisable(true);
             numarGenerat.clear();
         }
-        explicatieRadio.setText("Compune cuvant cu tot numarul sau partial. Ex: B 01 ERU (BOIERU)");
+        explicatieRadio.setText("Compune un cuvant cu tot numarul sau partial. Ex: B 01 ERU (BOIERU)");
         litere4.setDisable(false);
         litere5.setDisable(false);
         litere6.setDisable(false);
