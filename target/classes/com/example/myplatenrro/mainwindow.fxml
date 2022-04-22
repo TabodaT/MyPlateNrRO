@@ -38,8 +38,8 @@
                              toggleGroup="$cifreToggle" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
                 <RadioButton text="Textualizare cifre :P"  fx:id="textualizare" onAction="#handleTextualizare"
                              toggleGroup="$cifreToggle" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-                <Button text="Genereaza" onAction="#handleGenereaza" fx:id="buttonGenereaza"
-                        GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <Button text="Genereaza" onAction="#handleGenereaza" fx:id="buttonGenereaza" onMousePressed="#handleGenereazaClicked"
+                        onMouseReleased="#handleGenereazaReleased" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
                 <Button text="Refresh" onAction="#handleRefreshButton" fx:id="buttonRefresh"
                         GridPane.rowIndex="1" GridPane.columnIndex="3"/>
                 <Button text="Lista" onAction="#handleListaButton" fx:id="buttonLista"

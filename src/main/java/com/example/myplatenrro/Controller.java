@@ -6,6 +6,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -75,6 +77,9 @@ public class Controller {
 
     public void initialize() {
         buttonGenereaza.setDisable(true);
+        buttonGenereaza.setStyle("-fx-background-color: #0066ff; -fx-text-fill: white; -fx-font-weight: bold");
+        buttonGenereaza.setEffect(new Bloom());
+        buttonGenereaza.setEffect(new DropShadow());
         buttonRefresh.setDisable(true);
         buttonLista.setDisable(true);
         judeteLista.getItems().setAll(new Judet().getJudete());
@@ -94,7 +99,9 @@ public class Controller {
                     judetSelectatDinLista = new Judet(item);
                     if (cifreRandom.isSelected() || (textualizare.isSelected() &&
                             (litere4.isSelected() || litere5.isSelected() || litere6.isSelected() || litere7.isSelected()))) {
+
                         buttonGenereaza.setDisable(false);
+
                         buttonLista.setDisable(false);
                     }
 
@@ -107,6 +114,21 @@ public class Controller {
         litere6.setDisable(true);
         litere7.setDisable(true);
     }
+
+    @FXML
+    public void handleGenereazaClicked(){
+        buttonGenereaza.setEffect(null);
+        buttonGenereaza.setStyle("-fx-background-color: #0f0fdb; -fx-text-fill: white; -fx-font-weight: normal");
+    }
+
+    @FXML
+    public void handleGenereazaReleased(){
+        buttonGenereaza.setEffect(new Bloom());
+        buttonGenereaza.setEffect(new DropShadow());
+        buttonGenereaza.setStyle("-fx-background-color: #0066ff; -fx-text-fill: white; -fx-font-weight: bold");
+
+    }
+
 
     public void handlecifreRandom() {
         buttonRefresh.setDisable(true);
@@ -164,9 +186,9 @@ public class Controller {
 
     public void handleListaButton() {
         String s = "";
-        List<String > list =  generareListaNumere(judetSelectatDinLista);
-        for (int i = 0; i<list.size(); i++){
-            s+= list.get(i)+"\n";
+        List<String> list = generareListaNumere(judetSelectatDinLista);
+        for (int i = 0; i < list.size(); i++) {
+            s += list.get(i) + "\n";
         }
         listaNumereGenerate.setText(s);
         buttonRefresh.setDisable(false);
@@ -183,6 +205,7 @@ public class Controller {
     }
 
     private String nrGenerat;
+
     public void handleGenereaza() {
         String listaGenerate = "";
 
@@ -244,10 +267,10 @@ public class Controller {
         } else if (textualizare.isSelected()) {
             // Selectie random nr listere
             List<Integer> listRandLit = new ArrayList<>();
-            if (litere4.isSelected())  listRandLit.add(4);
-            if (litere5.isSelected())  listRandLit.add(5);
-            if (litere6.isSelected())  listRandLit.add(6);
-            if (litere7.isSelected())  listRandLit.add(7);
+            if (litere4.isSelected()) listRandLit.add(4);
+            if (litere5.isSelected()) listRandLit.add(5);
+            if (litere6.isSelected()) listRandLit.add(6);
+            if (litere7.isSelected()) listRandLit.add(7);
 
             // Compunere numar in functie de lungimea cuvantului
             randomNr2 = (int) (Math.random() * 10);
@@ -255,13 +278,13 @@ public class Controller {
             int count = 0;
             while (i < listaCuvinte.size() && count <= 2) {
                 int randLit = (int) (Math.random() * listRandLit.size());
-                int selected =  listRandLit.get(randLit);
+                int selected = listRandLit.get(randLit);
                 numar = "" + jud + " ";
                 i++;
                 String s = listaCuvinte.get(i);
                 ultimulCuv = s;
                 //*** 4 litere
-                if (s.length() == 4 && selected ==4) {
+                if (s.length() == 4 && selected == 4) {
                     first = Character.toString(s.charAt(0));
                     if (mapCifreLitere.containsKey(first)) {
                         while (first == "O" && randomNr2 == 0) {
@@ -271,7 +294,7 @@ public class Controller {
                         numar += randomNr2 + mapCifreLitere.get(first) + " " + s.substring(1);
                         lastIter = i + 1;
                         if (numar.equals(nrGenerat)) continue;
-                        if (numar.length()<=3 && listRandLit.size()>1) {
+                        if (numar.length() <= 3 && listRandLit.size() > 1) {
                             listRandLit.remove(selected);
                             continue;
                         }
@@ -279,7 +302,7 @@ public class Controller {
                     }
                 }
                 //*** 5 litere
-                if (s.length() == 5 && selected ==5) {
+                if (s.length() == 5 && selected == 5) {
                     first = Character.toString(s.charAt(0));
                     second = Character.toString(s.charAt(1));
                     if (mapCifreLitere.containsKey(first) && mapCifreLitere.containsKey(second)) {
@@ -288,7 +311,7 @@ public class Controller {
                                 " " + s.substring(2);
                         lastIter = i + 1;
                         if (numar.equals(nrGenerat)) continue;
-                        if (numar.length()<=3 && listRandLit.size()>1) {
+                        if (numar.length() <= 3 && listRandLit.size() > 1) {
                             listRandLit.remove(selected);
                             continue;
                         }
@@ -296,7 +319,7 @@ public class Controller {
                     }
                 }
                 //*** 6 litere
-                if (s.length() == 6 && selected ==6) {
+                if (s.length() == 6 && selected == 6) {
                     first = Character.toString(s.charAt(1));
                     second = Character.toString(s.charAt(2));
                     if (jud.equals("B")) {
@@ -309,7 +332,7 @@ public class Controller {
                                 " " + s.substring(3);
                         lastIter = i + 1;
                         if (numar.equals(nrGenerat)) continue;
-                        if (numar.length()<=3 && listRandLit.size()>1) {
+                        if (numar.length() <= 3 && listRandLit.size() > 1) {
                             listRandLit.remove(selected);
                             continue;
                         }
@@ -317,7 +340,7 @@ public class Controller {
                     }
                 }
                 //*** 7 litere
-                if (s.length() == 7 && selected ==7) {
+                if (s.length() == 7 && selected == 7) {
                     // B 143 DUL (BIPEDUL)
                     if (jud.equals("B")) {
                         first = Character.toString(s.charAt(2));
@@ -331,7 +354,7 @@ public class Controller {
                                     " " + s.substring(4);
                             lastIter = i + 1;
                             if (numar.equals(nrGenerat)) continue;
-                            if (numar.length()<=3 && listRandLit.size()>1) {
+                            if (numar.length() <= 3 && listRandLit.size() > 1) {
                                 listRandLit.remove(selected);
                                 continue;
                             }
@@ -347,7 +370,7 @@ public class Controller {
                                     " " + s.substring(4);
                             lastIter = i + 1;
                             if (numar.equals(nrGenerat)) continue;
-                            if (numar.length()<=3 && listRandLit.size()>1) {
+                            if (numar.length() <= 3 && listRandLit.size() > 1) {
                                 listRandLit.remove(selected);
                                 continue;
                             }
@@ -366,10 +389,10 @@ public class Controller {
             numarGenerat.setFont(Font.font("Times New Roman", 15));
             return numar = "Nu au mai fost gasite numere noi. Selecteaza alte crieterii sau apasa Refresh!";
         }
-        numar+="  \t> " + ultimulCuv +" <";
+        numar += "  \t> " + ultimulCuv + " <";
         cuvinteGenerate.add(ultimulCuv);
         listaNumereGenerateCTRL.add(numar);
-        numarGenerat.setFont(Font.font("Helvetica", FontWeight.BOLD,28));
+        numarGenerat.setFont(Font.font("Helvetica", FontWeight.BOLD, 28));
         return numar;
     }
 
@@ -415,10 +438,10 @@ public class Controller {
 //                listaGenerate+=numar+"\n";
                 listaGenerate.add(numar);
             }
-        } else if (textualizare.isSelected()){
+        } else if (textualizare.isSelected()) {
             // Compunere numar in functie de lungimea cuvantului
             randomNr2 = (int) (Math.random() * 10);
-            for (int i = 0; i<listaCuvinte.size();i++) {
+            for (int i = 0; i < listaCuvinte.size(); i++) {
                 numar = "" + jud + " ";
                 String s = listaCuvinte.get(i);
                 //*** 4 litere
@@ -429,7 +452,7 @@ public class Controller {
                             randomNr2 = (int) (Math.random() * 10);
                         }
                         if (listaLitereInterzise.contains(s.substring(1).charAt(0))) continue;
-                        numar += randomNr2 + mapCifreLitere.get(first) + " " + s.substring(1)+"   \t> " + s +" <";
+                        numar += randomNr2 + mapCifreLitere.get(first) + " " + s.substring(1) + "   \t> " + s + " <";
                         listaGenerate.add(numar);
                         continue;
                     }
@@ -441,7 +464,7 @@ public class Controller {
                     if (mapCifreLitere.containsKey(first) && mapCifreLitere.containsKey(second)) {
                         if (listaLitereInterzise.contains(s.substring(2).charAt(0))) continue;
                         numar += mapCifreLitere.get(first) + mapCifreLitere.get(second) +
-                                " " + s.substring(2)+"   \t> " + s +" <";
+                                " " + s.substring(2) + "   \t> " + s + " <";
                         if (numar.equals(nrGenerat)) continue;
                         listaGenerate.add(numar);
                         continue;
@@ -458,7 +481,7 @@ public class Controller {
                             && litJud.equals(s.substring(0, 1))) {
                         if (listaLitereInterzise.contains(s.substring(3).charAt(0))) continue;
                         numar += mapCifreLitere.get(first) + mapCifreLitere.get(second) +
-                                " " + s.substring(3) +"   \t> " + s +" <";
+                                " " + s.substring(3) + "   \t> " + s + " <";
                         if (numar.equals(nrGenerat)) continue;
                         listaGenerate.add(numar);
                         continue;
@@ -476,7 +499,7 @@ public class Controller {
                                 && jud.equals(s.substring(0, 1))) {
                             if (listaLitereInterzise.contains(s.substring(4).charAt(0))) continue;
                             numar += mapCifreLitere.get(third) + mapCifreLitere.get(first) + mapCifreLitere.get(second) +
-                                    " " + s.substring(4)+"   \t> " + s +" <";
+                                    " " + s.substring(4) + "   \t> " + s + " <";
                             if (numar.equals(nrGenerat)) continue;
                             listaGenerate.add(numar);
                         }
@@ -487,7 +510,7 @@ public class Controller {
                                 && jud.substring(0, 2).equals(s.substring(0, 2))) {
                             if (listaLitereInterzise.contains(s.substring(4).charAt(0))) continue;
                             numar += mapCifreLitere.get(first) + mapCifreLitere.get(second) +
-                                    " " + s.substring(4)+"   \t> " + s +" <";
+                                    " " + s.substring(4) + "   \t> " + s + " <";
                             if (numar.equals(nrGenerat)) continue;
                             listaGenerate.add(numar);
                         }
@@ -497,7 +520,7 @@ public class Controller {
             }
         }
 
-        if (listaGenerate.size()==0) listaGenerate.add("Nu exista cuvinte.");
+        if (listaGenerate.size() == 0) listaGenerate.add("Nu exista cuvinte.");
         return listaGenerate;
 
 //        if (numar.length() <= 3) {
@@ -509,7 +532,7 @@ public class Controller {
 //        listaNumereGenerateCTRL.add(numar);
 //        numarGenerat.setFont(Font.font("Helvetica", FontWeight.BOLD,28));
 //        return numar;
-        }
+    }
 
 
 }

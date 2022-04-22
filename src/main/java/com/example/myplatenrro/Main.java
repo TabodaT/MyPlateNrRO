@@ -14,6 +14,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("mainwindow.fxml"));
         Scene scene = new Scene(root, 900, 500);
+        setUserAgentStylesheet(STYLESHEET_CASPIAN);
         stage.setTitle("MyPlateNr:RO");
         stage.setScene(scene);
         stage.show();
