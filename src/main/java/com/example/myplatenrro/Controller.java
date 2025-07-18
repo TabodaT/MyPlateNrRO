@@ -18,7 +18,7 @@ import java.util.Map;
 
 
 public class Controller {
-
+// this is the branch before playing on the project with AI
     @FXML
     private ListView<String> judeteLista;
     @FXML
