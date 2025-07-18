@@ -9,8 +9,5 @@
         <module name="MyPlateNrRO" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="MyPlateNrRO" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>
