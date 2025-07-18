@@ -75,6 +75,10 @@ public class Controller {
     };
 
 
+    /**
+     * Initializes the controller and sets up the UI components
+     * This method is called automatically by JavaFX after loading the FXML
+     */
     public void initialize() {
         buttonGenereaza.setDisable(true);
         buttonGenereaza.setStyle("-fx-background-color: #0066ff; -fx-text-fill: white; -fx-font-weight: bold");
@@ -115,12 +119,20 @@ public class Controller {
         litere7.setDisable(true);
     }
 
+    /**
+     * Handles the generate button click event for visual feedback
+     * Changes the button appearance when pressed
+     */
     @FXML
     public void handleGenereazaClicked(){
         buttonGenereaza.setEffect(null);
         buttonGenereaza.setStyle("-fx-background-color: #0f0fdb; -fx-text-fill: white; -fx-font-weight: normal");
     }
 
+    /**
+     * Handles the generate button release event for visual feedback
+     * Restores the button appearance when released
+     */
     @FXML
     public void handleGenereazaReleased(){
         buttonGenereaza.setEffect(new Bloom());
@@ -130,6 +142,10 @@ public class Controller {
     }
 
 
+    /**
+     * Handles the random digits radio button selection
+     * Configures the UI for random digit generation mode
+     */
     public void handlecifreRandom() {
         buttonRefresh.setDisable(true);
         numarGenerat.clear();
@@ -149,6 +165,10 @@ public class Controller {
         litere7.setSelected(false);
     }
 
+    /**
+     * Handles the textualization radio button selection
+     * Configures the UI for textualization mode where digits form words
+     */
     public void handleTextualizare() {
         if (judetSelectatDinLista != null &&
                 (litere4.isSelected() || litere5.isSelected() || litere6.isSelected() || litere7.isSelected())) {
@@ -167,6 +187,10 @@ public class Controller {
 //        explicatieRadio.setFont(Font.font("Times New Roman bold"));
     }
 
+    /**
+     * Handles the letter count checkbox selections for textualization mode
+     * Enables/disables the generate button based on checkbox states
+     */
     public void handleCheckLitere() {
         if (judetSelectatDinLista != null &&
                 (litere4.isSelected() || litere5.isSelected() || litere6.isSelected() || litere7.isSelected())) {
@@ -179,11 +203,19 @@ public class Controller {
         }
     }
 
+    /**
+     * Handles county selection from the ListView
+     * Sets the selected county for license plate generation
+     */
     public void handleClickJudete() {
         String item = judeteLista.getSelectionModel().getSelectedItem();
         judetSelectatDinLista = new Judet(item);
     }
 
+    /**
+     * Handles the List button click to generate all possible license plates
+     * Displays all available combinations for the selected county and mode
+     */
     public void handleListaButton() {
         String s = "";
         List<String> list = generareListaNumere(judetSelectatDinLista);
@@ -196,6 +228,10 @@ public class Controller {
     }
 
     // elimin cuvintele deja afisate si cu refresh le pot reafisa
+    /**
+     * Handles the Refresh button click to reset generated words
+     * Clears the used words list to allow regeneration of previous combinations
+     */
     public void handleRefreshButton() {
         cuvinteGenerate.clear();
         buttonRefresh.setDisable(true);
@@ -206,6 +242,10 @@ public class Controller {
 
     private String nrGenerat;
 
+    /**
+     * Handles the main Generate button click to create a single license plate
+     * Generates one license plate number based on selected county and mode
+     */
     public void handleGenereaza() {
         String listaGenerate = "";
 
@@ -227,6 +267,11 @@ public class Controller {
     private List<String> listaNumereGenerateCTRL = new ArrayList<>();
 
     //*** Generare Numar
+    /**
+     * Generates a single license plate number for the specified county
+     * @param judet the county for which to generate the license plate
+     * @return the generated license plate number as a string
+     */
     public String generareNr(Judet judet) {
         String ultimulCuv = "???";
         String jud = judet.getPrescurtare();
@@ -259,7 +304,11 @@ public class Controller {
                 }
                 numar += String.format("%2s", randomNr).replace(" ", "0");
             }
-            randomNr2 = (int) (Math.random() * listaCuvinte.size()) + 1;
+            if (listaCuvinte.isEmpty()) {
+                System.err.println("Lista cuvinte este goala!");
+                return "Lista cuvinte este goala!";
+            }
+            randomNr2 = (int) (Math.random() * listaCuvinte.size());
             ultimulCuv = listaCuvinte.get(randomNr2);
             numar += " " + ultimulCuv;
 
@@ -273,15 +322,19 @@ public class Controller {
             if (litere7.isSelected()) listRandLit.add(7);
 
             // Compunere numar in functie de lungimea cuvantului
+            if (listaCuvinte.isEmpty()) {
+                System.err.println("Lista cuvinte este goala!");
+                return "Lista cuvinte este goala!";
+            }
             randomNr2 = (int) (Math.random() * 10);
-            int i = (int) (Math.random() * listaCuvinte.size()) + 1;
+            int i = (int) (Math.random() * listaCuvinte.size());
             int count = 0;
             while (i < listaCuvinte.size() && count <= 2) {
                 int randLit = (int) (Math.random() * listRandLit.size());
                 int selected = listRandLit.get(randLit);
                 numar = "" + jud + " ";
-                i++;
                 String s = listaCuvinte.get(i);
+                i++;
                 ultimulCuv = s;
                 //*** 4 litere
                 if (s.length() == 4 && selected == 4) {
@@ -391,12 +444,19 @@ public class Controller {
         }
         numar += "  \t> " + ultimulCuv + " <";
         cuvinteGenerate.add(ultimulCuv);
-        listaNumereGenerateCTRL.add(numar);
+        if (!listaNumereGenerateCTRL.contains(numar)) {
+            listaNumereGenerateCTRL.add(numar);
+        }
         numarGenerat.setFont(Font.font("Helvetica", FontWeight.BOLD, 28));
         return numar;
     }
 
     //*** Generare Lista Numere
+    /**
+     * Generates a complete list of license plate numbers for the specified county
+     * @param judet the county for which to generate license plates
+     * @return a list of all possible license plate combinations
+     */
     public List<String> generareListaNumere(Judet judet) {
         List<String> listaGenerate = new ArrayList<>();
 //        String listaGenerate = "";
@@ -436,7 +496,9 @@ public class Controller {
 
                 numar += " " + s;
 //                listaGenerate+=numar+"\n";
-                listaGenerate.add(numar);
+                if (!listaGenerate.contains(numar)) {
+                    listaGenerate.add(numar);
+                }
             }
         } else if (textualizare.isSelected()) {
             // Compunere numar in functie de lungimea cuvantului
@@ -453,7 +515,9 @@ public class Controller {
                         }
                         if (listaLitereInterzise.contains(s.substring(1).charAt(0))) continue;
                         numar += randomNr2 + mapCifreLitere.get(first) + " " + s.substring(1) + "   \t> " + s + " <";
-                        listaGenerate.add(numar);
+                        if (!listaGenerate.contains(numar)) {
+                    listaGenerate.add(numar);
+                }
                         continue;
                     }
                 }
@@ -466,7 +530,9 @@ public class Controller {
                         numar += mapCifreLitere.get(first) + mapCifreLitere.get(second) +
                                 " " + s.substring(2) + "   \t> " + s + " <";
                         if (numar.equals(nrGenerat)) continue;
-                        listaGenerate.add(numar);
+                        if (!listaGenerate.contains(numar)) {
+                    listaGenerate.add(numar);
+                }
                         continue;
                     }
                 }
@@ -483,7 +549,9 @@ public class Controller {
                         numar += mapCifreLitere.get(first) + mapCifreLitere.get(second) +
                                 " " + s.substring(3) + "   \t> " + s + " <";
                         if (numar.equals(nrGenerat)) continue;
-                        listaGenerate.add(numar);
+                        if (!listaGenerate.contains(numar)) {
+                    listaGenerate.add(numar);
+                }
                         continue;
                     }
                 }
@@ -501,7 +569,9 @@ public class Controller {
                             numar += mapCifreLitere.get(third) + mapCifreLitere.get(first) + mapCifreLitere.get(second) +
                                     " " + s.substring(4) + "   \t> " + s + " <";
                             if (numar.equals(nrGenerat)) continue;
-                            listaGenerate.add(numar);
+                            if (!listaGenerate.contains(numar)) {
+                    listaGenerate.add(numar);
+                }
                         }
                     } else {
                         first = Character.toString(s.charAt(2));
@@ -512,7 +582,9 @@ public class Controller {
                             numar += mapCifreLitere.get(first) + mapCifreLitere.get(second) +
                                     " " + s.substring(4) + "   \t> " + s + " <";
                             if (numar.equals(nrGenerat)) continue;
-                            listaGenerate.add(numar);
+                            if (!listaGenerate.contains(numar)) {
+                    listaGenerate.add(numar);
+                }
                         }
                     }
 

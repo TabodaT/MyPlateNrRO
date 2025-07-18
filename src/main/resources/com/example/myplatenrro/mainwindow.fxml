@@ -5,87 +5,118 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.myplatenrro.Controller">
+            fx:controller="com.example.myplatenrro.Controller"
+            styleClass="border-pane">
 
     <top>
-        <VBox alignment="CENTER">
+        <VBox alignment="CENTER" styleClass="control-panel">
             <padding>
-                <Insets top="10" bottom="10"/>
+                <Insets top="15" bottom="15" left="20" right="20"/>
             </padding>
-            <Label text="Gaseste numarul de inmatriculare personalizat pe care ti-l doresti!">
+            <Label text="🚗 Generator Numere Înmatriculare România 🇷🇴" styleClass="header-label">
                 <font>
-                    <Font name="Times New Roman bold" size="25"/>
+                    <Font name="Segoe UI" size="28"/>
                 </font>
             </Label>
-            <GridPane hgap="10" vgap="5">
+            
+            <HBox spacing="20" alignment="CENTER">
                 <padding>
-                    <Insets left="50" top="10"/>
+                    <Insets top="20" bottom="10"/>
                 </padding>
-                <Label text="Alege    →" GridPane.rowIndex="0" GridPane.columnIndex="0">
-                    <font>
-                        <Font name="Times New Roman" size="15"/>
-                    </font>
-                </Label>
-                <fx:define>
-                    <ToggleGroup fx:id="cifreToggle"/>
-                </fx:define>
-                <Label text="↓" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.halignment="CENTER">
-                    <font>
-                        <Font name="Times New Roman" size="15"/>
-                    </font>
-                </Label>
-                <RadioButton text="Cifre Random" fx:id="cifreRandom" onAction="#handlecifreRandom"
-                             toggleGroup="$cifreToggle" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-                <RadioButton text="Textualizare cifre :P"  fx:id="textualizare" onAction="#handleTextualizare"
-                             toggleGroup="$cifreToggle" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-                <Button text="Genereaza" onAction="#handleGenereaza" fx:id="buttonGenereaza" onMousePressed="#handleGenereazaClicked"
-                        onMouseReleased="#handleGenereazaReleased" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
-                <Button text="Refresh" onAction="#handleRefreshButton" fx:id="buttonRefresh"
-                        GridPane.rowIndex="1" GridPane.columnIndex="3"/>
-                <Button text="Lista" onAction="#handleListaButton" fx:id="buttonLista"
-                        GridPane.rowIndex="1" GridPane.columnIndex="4"/>
-                <Label fx:id="explicatieRadio" text="Alege de mai jos: ↓" prefWidth="400"
-                GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.columnSpan="4">
-                    <Font name="Times New Roman bold" size="15"/>
-                </Label>
-                <Label  text="Pentru textualizare:"
-                       GridPane.rowIndex="0" GridPane.columnIndex="5" GridPane.columnSpan="2">
-                    <Font name="Times New Roman bold" size="15"/>
-                </Label>
-                <CheckBox text="4 litere"  fx:id="litere4" onAction="#handleCheckLitere"
-                              GridPane.rowIndex="1" GridPane.columnIndex="5"/>
-                <CheckBox text="5 litere"  fx:id="litere5" onAction="#handleCheckLitere"
-                              GridPane.rowIndex="2" GridPane.columnIndex="5"/>
-                <CheckBox text="6 litere"  fx:id="litere6" onAction="#handleCheckLitere"
-                              GridPane.rowIndex="1" GridPane.columnIndex="6"/>
-                <CheckBox text="7 litere"  fx:id="litere7" onAction="#handleCheckLitere"
-                             GridPane.rowIndex="2" GridPane.columnIndex="6"/>
-            </GridPane>
-
+                
+                <!-- Left Section: Mode Selection -->
+                <VBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Mod de Generare:" styleClass="section-label"/>
+                    <fx:define>
+                        <ToggleGroup fx:id="cifreToggle"/>
+                    </fx:define>
+                    <RadioButton text="🎲 Cifre Random" fx:id="cifreRandom" onAction="#handlecifreRandom"
+                                 toggleGroup="$cifreToggle" styleClass="radio-button"/>
+                    <RadioButton text="🔤 Textualizare Cifre" fx:id="textualizare" onAction="#handleTextualizare"
+                                 toggleGroup="$cifreToggle" styleClass="radio-button"/>
+                    <Label fx:id="explicatieRadio" text="Selectează un mod de generare ↑" 
+                           styleClass="instruction-label" prefWidth="300" wrapText="true"/>
+                </VBox>
+                
+                <!-- Center Section: Action Buttons -->
+                <VBox spacing="15" alignment="CENTER">
+                    <Label text="Acțiuni:" styleClass="section-label"/>
+                    <HBox spacing="10" alignment="CENTER">
+                        <Button text="🎯 Generează" onAction="#handleGenereaza" fx:id="buttonGenereaza" 
+                                onMousePressed="#handleGenereazaClicked" onMouseReleased="#handleGenereazaReleased"
+                                styleClass="modern-button, generate-button"/>
+                        <Button text="🔄 Refresh" onAction="#handleRefreshButton" fx:id="buttonRefresh"
+                                styleClass="modern-button, refresh-button"/>
+                        <Button text="📋 Lista" onAction="#handleListaButton" fx:id="buttonLista"
+                                styleClass="modern-button, list-button"/>
+                    </HBox>
+                </VBox>
+                
+                <!-- Right Section: Textualization Options -->
+                <VBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Opțiuni Textualizare:" styleClass="section-label"/>
+                    <GridPane hgap="10" vgap="5">
+                        <CheckBox text="4 litere" fx:id="litere4" onAction="#handleCheckLitere"
+                                  styleClass="check-box" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <CheckBox text="5 litere" fx:id="litere5" onAction="#handleCheckLitere"
+                                  styleClass="check-box" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <CheckBox text="6 litere" fx:id="litere6" onAction="#handleCheckLitere"
+                                  styleClass="check-box" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <CheckBox text="7 litere" fx:id="litere7" onAction="#handleCheckLitere"
+                                  styleClass="check-box" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    </GridPane>
+                </VBox>
+            </HBox>
         </VBox>
     </top>
+    
     <left>
-        <ListView fx:id="judeteLista" prefWidth="150">
-<!--            onMouseClicked="#handleClickJudete"-->
-        </ListView>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" bottom="10" left="10" right="5"/>
+            </padding>
+            <Label text="🏛️ Selectează Județul:" styleClass="section-label"/>
+            <ListView fx:id="judeteLista" prefWidth="180" prefHeight="400" styleClass="list-view">
+                <tooltip>
+                    <Tooltip text="Selectează județul pentru care dorești să generezi numărul"/>
+                </tooltip>
+            </ListView>
+        </VBox>
     </left>
+    
     <center>
-        <VBox>
-            <TextArea fx:id="numarGenerat" VBox.vgrow="ALWAYS" wrapText="true">
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" bottom="10" left="5" right="5"/>
+            </padding>
+            <Label text="🎯 Numărul Generat:" styleClass="section-label"/>
+            <TextArea fx:id="numarGenerat" VBox.vgrow="ALWAYS" wrapText="true" 
+                      styleClass="text-area, generated-number" editable="false">
                 <padding>
-                    <Insets topRightBottomLeft="3"/>
+                    <Insets topRightBottomLeft="15"/>
                 </padding>
+                <tooltip>
+                    <Tooltip text="Aici va apărea numărul de înmatriculare generat"/>
+                </tooltip>
             </TextArea>
         </VBox>
     </center>
+    
     <right>
-        <VBox>
-            <TextArea fx:id="listaNumereGenerate" VBox.vgrow="ALWAYS" prefWidth="310">
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" bottom="10" left="5" right="10"/>
+            </padding>
+            <Label text="📜 Lista Numere Generate:" styleClass="section-label"/>
+            <TextArea fx:id="listaNumereGenerate" VBox.vgrow="ALWAYS" prefWidth="320" 
+                      styleClass="text-area, results-list" editable="false">
                 <padding>
-                    <Insets topRightBottomLeft="3"/>
+                    <Insets topRightBottomLeft="10"/>
                 </padding>
+                <tooltip>
+                    <Tooltip text="Istoricul numerelor generate în sesiunea curentă"/>
+                </tooltip>
             </TextArea>
         </VBox>
-
     </right>
 </BorderPane>

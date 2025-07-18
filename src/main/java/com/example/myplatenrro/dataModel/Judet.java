@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents a Romanian county (judet) with its name and license plate abbreviation
+ * This class manages the mapping between county names and their official abbreviations
+ */
 public class Judet {
     private String nume;
     private String prescurtare;
@@ -56,11 +60,18 @@ public class Judet {
         }
     };
 
+    /**
+     * Constructor that creates a county object with specified name
+     * @param nume the name of the county
+     */
     public Judet(String nume) {
         this.nume = nume;
         this.prescurtare = presurtareMap.get(nume);
     }
 
+    /**
+     * Default constructor for creating an empty county object
+     */
     public Judet() {
     }
 
@@ -112,14 +123,26 @@ public class Judet {
         }
     };
 
+    /**
+     * Returns the name of the county
+     * @return the county name
+     */
     public String getNume() {
         return nume;
     }
 
+    /**
+     * Returns the license plate abbreviation for the county
+     * @return the county abbreviation (e.g., "B" for Bucuresti, "AB" for Alba)
+     */
     public String getPrescurtare() {
         return prescurtare;
     }
 
+    /**
+     * Returns the complete list of Romanian counties
+     * @return the list of all county names
+     */
     public List<String> getJudete() {
         return judete;
     }
